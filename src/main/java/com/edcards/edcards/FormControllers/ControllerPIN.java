@@ -1,8 +1,13 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import com.edcards.edcards.ClassControllers.GlobalVAR;
+import javax.swing.JOptionPane;
+
+
 
 public class ControllerPIN {
     private int valorAtual;
@@ -75,13 +80,17 @@ public class ControllerPIN {
             pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
             System.out.println(pin);
 
-            /*
-            globalvar e confirmar o PIN!!! if (pin == pin)
-
-            if
-             */
+            Pessoa pessoaAtual = GlobalVAR.Dados.getPessoaAtual();
+            if (pessoaAtual != null) {
+                int pinDaPessoa = pessoaAtual.getPin();
+                if (pin == pinDaPessoa) {
+                    JOptionPane.showMessageDialog(null, "O PIN digitado corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "O PIN digitado não corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                System.err.println("Nenhuma pessoa atual encontrada");
+            }
         }
-
     }
-
-}
+    }

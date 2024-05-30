@@ -1151,7 +1151,7 @@
     </collation>
     <schema id="324" parent="1" name="db_escola">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-05-28.18:22:50</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-05-30.12:23:22</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <schema id="325" parent="1" name="escola">

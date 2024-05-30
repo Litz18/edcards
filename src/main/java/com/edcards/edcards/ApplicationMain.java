@@ -21,31 +21,35 @@ public class ApplicationMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("ReadCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Aplicação");
         stage.setScene(scene);
         stage.show();
         GlobalVAR.Dados.setCurrentStage(stage);
+
         Platform.runLater(() -> {
-            Pessoa pessoa = cartaoLido();
-            try {
+            while (true) {
+                Pessoa pessoa = cartaoLido();
                 if (pessoa != null) {
-                    FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PinInput.fxml"));
-                    Parent pinRoot = pinLoader.load();
-                    Scene pinScene = new Scene(pinRoot);
-                    stage.setScene(pinScene);
+                    try {
+                        FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PinInput.fxml"));
+                        Parent pinRoot = pinLoader.load();
+                        Scene pinScene = new Scene(pinRoot);
+                        stage.setScene(pinScene);
+                        break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    System.err.println("Nenhum user encontrado");
+                    System.err.println("Nenhum usuário encontrado. Aguardando cartão...");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        });
-        stage.setOnCloseRequest(event -> {
-            Platform.exit();
-            System.exit(0);
         });
     }
 
@@ -59,13 +63,14 @@ public class ApplicationMain extends Application {
         var userByNFC = CartaoBLL.getUserByNFC(cartao);
         if (userByNFC != null) {
             Pessoa pessoa = UsersBLL.getUser(userByNFC.getIduser());
+            System.out.println("ID: " + pessoa.getIduser());
+            System.out.println("Número do Cartão: " + pessoa.getNumCartao());
+            GlobalVAR.Dados.setPessoaAtual(pessoa);
             return pessoa;
         } else {
-            System.err.println("User Não Encontrado");
             return null;
         }
     }
-
 
     public static void main(String[] args) {
         launch();

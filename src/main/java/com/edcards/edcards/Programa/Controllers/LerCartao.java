@@ -1,50 +1,17 @@
 package com.edcards.edcards.Programa.Controllers;
 
 import javax.smartcardio.*;
-import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class LerCartao {
-    public String returnIDCartao() throws CardException, InterruptedException {
-        try {
-            Scanner scanner = new Scanner(System.in);
 
-            while (true) {
-                String idCartao = readCardId(scanner);
-
-                if (idCartao == null) {
-                    System.out.println("Não foi possível ler o ID do cartão NFC. Tente novamente.");
-                } else {
-                    return idCartao;
-                }
-
-                Thread.sleep(2000);
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public static String lerIDCartao() throws CardException, InterruptedException {
-        try {
-            Scanner scanner = new Scanner(System.in);
+        TerminalFactory factory = TerminalFactory.getDefault();
+        CardTerminal terminal = factory.terminals().list().get(0);
 
-            while (true) {
-                Thread.sleep(2000);
-                String idCartao = readCardId(scanner);
-                return idCartao;
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String readCardId(Scanner scanner) throws InterruptedException {
-        try {
-            TerminalFactory factory = TerminalFactory.getDefault();
-            CardTerminal terminal = factory.terminals().list().get(0);
-
-            while (true) {
+        while (true) {
+            try {
                 if (terminal.isCardPresent()) {
-
                     Card card = terminal.connect("*");
                     CardChannel channel = card.getBasicChannel();
 
@@ -54,7 +21,9 @@ public class LerCartao {
                     byte[] responseData = responseAPDU.getBytes();
                     if (responseAPDU.getSW() != 0x9000) {
                         System.out.println("Não foi possível ler o ID do cartão. Tente novamente.");
-                        break;
+                        card.disconnect(false);
+                        TimeUnit.SECONDS.sleep(2); // Espera 2 segundos antes de tentar novamente
+                        continue;
                     }
 
                     byte[] uid = new byte[responseAPDU.getData().length];
@@ -63,14 +32,13 @@ public class LerCartao {
                     String idCartao = byteArrayToHexString(uid);
 
                     card.disconnect(false);
-                    //break; // Saia do loop depois de processar o cartão
                     return idCartao;
                 }
+                TimeUnit.SECONDS.sleep(2); // Espera 2 segundos antes de verificar novamente
+            } catch (CardException | InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (CardException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     private static String byteArrayToHexString(byte[] bytes) {

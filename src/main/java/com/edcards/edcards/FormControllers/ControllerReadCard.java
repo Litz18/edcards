@@ -34,7 +34,7 @@ public class ControllerReadCard implements Initializable {
             LerCartao lerCartao = new LerCartao();
             String idCartao = "";
             try {
-                idCartao = lerCartao.returnIDCartao();
+                idCartao = lerCartao.lerIDCartao();
             } catch (CardException | InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -3,6 +3,8 @@ package com.edcards.edcards.ClassControllers;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
+import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -16,6 +18,7 @@ public class GlobalVAR {
         private static Admin adminAtual;
         private static Funcionario funcionarioAtual;
         private static Aluno alunoAtual;
+        private static Pessoa pessoaAtual;
 
         public static Stage getCurrentStage() {
             return currentStage;
@@ -49,6 +52,16 @@ public class GlobalVAR {
 
         public static void setAdminAtual(Admin adminAtual) {
             Dados.adminAtual = adminAtual;
+        }
+
+        public static void setPessoaAtual(Pessoa pessoa) {
+            pessoaAtual = pessoa;
+        }
+        public static Pessoa getPessoaAtual() {
+            return pessoaAtual;
+        }
+
+        public static void setCartaoAtual(String cartao) {
         }
 
     }
