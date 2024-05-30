@@ -6,11 +6,11 @@ import java.io.*;
 
 public class ImageController {
     public static byte[] convertImgToByteArr(File file) throws IOException { //new
-        byte[] foto;
+        byte[] fotob;
         try (InputStream fis = new FileInputStream(file)) {
-            foto = fis.readAllBytes();
+            fotob = fis.readAllBytes();
         }
-        return foto;
+        return fotob;
     }
 
     public static Image convertByteToImage(byte[] foto){   //new

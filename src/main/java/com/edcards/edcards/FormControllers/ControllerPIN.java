@@ -89,8 +89,8 @@ public class ControllerPIN {
                     JOptionPane.showMessageDialog(null, "O PIN digitado não corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                System.err.println("Nenhuma pessoa atual encontrada");
+                System.err.println("Nenhuma pessoa encontrada");
             }
         }
     }
-    }
+}

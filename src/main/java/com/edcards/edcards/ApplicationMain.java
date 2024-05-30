@@ -33,7 +33,7 @@ public class ApplicationMain extends Application {
                 Pessoa pessoa = cartaoLido();
                 if (pessoa != null) {
                     try {
-                        FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PinInput.fxml"));
+                        FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PIN.fxml"));
                         Parent pinRoot = pinLoader.load();
                         Scene pinScene = new Scene(pinRoot);
                         stage.setScene(pinScene);
