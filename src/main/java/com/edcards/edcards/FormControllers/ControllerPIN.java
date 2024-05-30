@@ -84,7 +84,7 @@ public class ControllerPIN {
             if (pessoaAtual != null) {
                 int pinDaPessoa = pessoaAtual.getPin();
                 if (pin == pinDaPessoa) {
-                    JOptionPane.showMessageDialog(null, "O PIN digitado corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
+
                 } else {
                     JOptionPane.showMessageDialog(null, "O PIN digitado não corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
                 }

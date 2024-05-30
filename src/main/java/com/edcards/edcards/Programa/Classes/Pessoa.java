@@ -1,5 +1,6 @@
 package com.edcards.edcards.Programa.Classes;
 
+import com.edcards.edcards.ClassControllers.UsuarioEnum;
 import javafx.scene.image.Image;
 
 import java.sql.Date;
@@ -25,8 +26,9 @@ public abstract class Pessoa {
     private Date dataNasc;
     private String cartaoC;
     private Image horario;
+    private int tipo;
 
-    public Pessoa(int iduser, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario) {
+    public Pessoa(int iduser, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int tipo) {
         this.iduser = iduser;
         this.numCartao = numCartao;
         this.nome = nome;
@@ -38,10 +40,12 @@ public abstract class Pessoa {
         this.dataNasc = dataNasc;
         this.cartaoC = cartaoC;
         this.horario = horario;
+        this.tipo = tipo;
     }
 
     public Pessoa(int iduser) {
         this.iduser = iduser;
+        this.tipo = 0;
         this.numCartao = "";
         this.nome = "";
         this.saldo = 0.0;
@@ -86,8 +90,13 @@ public abstract class Pessoa {
         this.foto = foto;
     }
 
+    public UsuarioEnum getTipo() {
+        return UsuarioEnum.fromDbValue(tipo);
+    }
 
-
+    public void setTipo(UsuarioEnum tipo) {
+        this.tipo = tipo.toDbValue();
+    }
 
     public String getMorada() {
         return morada;
